@@ -1,4 +1,6 @@
 //Vamos construir uma calclculadora simples em C++
+/*Compilar este programa com o comando em plataformas Linux: g++ -o calculadora_basica calculadora_basica.cpp `pkg-config gtkmm-3.0 --cflags --libs` 
+*/
 
 
 /*Cabeçalho*/
