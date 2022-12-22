@@ -15,7 +15,7 @@ calculator::~calculator(){
 };
 
 //Construtor da classe
-calculator::calculator():base(ORIENTATION_VERTICAL, 5), caixa1(ORIENTATION_HORIZONTAL, 5), caixa2(ORIENTATION_HORIZONTAL, 5),  zero("0"), um("1"), dois("2"), tres("3"), quatro("4"), cinco("5"), seis("6"), sete("7"), oito("8"), nove("9"), mais("+"), menos("-"), vezes("x"), dividir("/"), igual("="), mais_ou_menos("+/-"), ponto("."), limpar("CE"), desligar("OFF"), memoria("M+"), memoria_cache("MC"), raiz_quadrada("√")
+calculator::calculator():base(ORIENTATION_VERTICAL, 5), caixa1(ORIENTATION_VERTICAL, 5), caixa2(ORIENTATION_HORIZONTAL, 5),  zero("0"), um("1"), dois("2"), tres("3"), quatro("4"), cinco("5"), seis("6"), sete("7"), oito("8"), nove("9"), mais("+"), menos("-"), vezes("x"), dividir("/"), igual("="), mais_ou_menos("+/-"), ponto("."), limpar("CE"), desligar("OFF"), memoria("M+"), memoria_cache("MC"), raiz_quadrada("√"), zerozero("00"), backspace("<-")
 {
 //Definindo o layout do applicativo
 set_title("Calculadora básica");
@@ -23,6 +23,13 @@ add(base);
 base.pack_start(caixa1);
 base.pack_start(caixa2);
 
+//Configurando a barra de menu de ajuda
+caixa1.pack_start(help_bar, PACK_SHRINK);
+auto help=make_managed<MenuItem>("_Ajuda", true);
+help->signal_activate().connect(sigc::mem_fun(*this, &calculator::help));
+help_bar.append(*help);
+help_bar.accelerate(*this);
+help_bar.show_all();
 //Opções do display
 caixa1.pack_start(display, PACK_EXPAND_WIDGET, 5);
 display.set_visible(true);
@@ -44,7 +51,7 @@ numeric_grid.attach(dois, 1, 2, 1, 1);
 numeric_grid.attach(tres, 2, 2, 1, 1);
 numeric_grid.attach(zero, 0, 3, 1, 1);
 numeric_grid.attach(ponto, 1, 3, 1, 1);
-numeric_grid.attach(igual, 2, 3, 1, 1);
+numeric_grid.attach(zerozero, 2, 3, 1, 1);
 //Ajustando o teclado de operadores
 caixa2.pack_start(arithmetic_frame, PACK_EXPAND_WIDGET, 5);
 arithmetic_frame.add(arithmetic_grid);
@@ -60,6 +67,8 @@ arithmetic_grid.attach(mais_ou_menos, 1, 2, 1, 1);
 arithmetic_grid.attach(raiz_quadrada, 1, 3, 1, 1);
 arithmetic_grid.attach(limpar, 2, 0, 1, 1);
 arithmetic_grid.attach(desligar, 2, 1, 1, 1);
+arithmetic_grid.attach(backspace, 2, 2, 1, 1);
+arithmetic_grid.attach(igual, 2, 3, 1, 1);
 //Linkando as funções aos botões
 //Funções de uso geral
 limpar.signal_clicked().connect(sigc::mem_fun(*this, &calculator::ce));
@@ -68,7 +77,9 @@ mais_ou_menos.signal_clicked().connect(sigc::mem_fun(*this, &calculator::plus_mi
 igual.signal_clicked().connect(sigc::mem_fun(*this, &calculator::equal));
 memoria.signal_clicked().connect(sigc::mem_fun(*this, &calculator::memory));
 memoria_cache.signal_clicked().connect(sigc::mem_fun(*this, &calculator::memory_clear));
+backspace.signal_clicked().connect(sigc::mem_fun(*this, &calculator::back));
 //Funções de entradas de dados
+zerozero.signal_clicked().connect(sigc::mem_fun(*this, &calculator::put_00));
 zero.signal_clicked().connect(sigc::mem_fun(*this, &calculator::put_0));
 um.signal_clicked().connect(sigc::mem_fun(*this, &calculator::put_1));
 dois.signal_clicked().connect(sigc::mem_fun(*this, &calculator::put_2));
@@ -86,6 +97,7 @@ mais.signal_clicked().connect(sigc::mem_fun(*this, &calculator::add2));
 menos.signal_clicked().connect(sigc::mem_fun(*this, &calculator::subtract));
 vezes.signal_clicked().connect(sigc::mem_fun(*this, &calculator::multiply));
 dividir.signal_clicked().connect(sigc::mem_fun(*this, &calculator::divide));
+
 //Exibindo widgets do app
 show_all_children();
 };
@@ -123,8 +135,14 @@ display.set_text(to_string(memoria_valor));
 memoria_valor=0.0;
 };
 
-//Funções de inserção de texto
 
+void calculator::back(){
+display_texto=display.get_text();
+display_texto.pop_back();
+display.set_text(display_texto);
+};
+
+//Funções de inserção de texto
 void calculator::put_point(){
 char c='.';
 display_texto=display.get_text();
@@ -139,6 +157,12 @@ display_texto.push_back(c);
 display.set_text(display_texto);
 };
 
+void calculator::put_00(){
+string c="00";
+display_texto=display.get_text();
+display_texto+=c;
+display.set_text(display_texto);
+};
 
 void calculator::put_1(){
 char c='1';
@@ -266,3 +290,10 @@ resultado=sqrt(parcela1);
 display.set_text(to_string(resultado));
 };
 
+//Função de ajuda
+void calculator::help(){
+help_window->set_default_size(600, 600);
+help_window->show();
+help_window->show_all_children();
+help_window->set_title("Calculadora básica - ajuda.");
+}
