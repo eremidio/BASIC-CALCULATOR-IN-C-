@@ -32,7 +32,7 @@ help_scrolledwindow.set_policy(POLICY_AUTOMATIC, POLICY_AUTOMATIC);
 help_scrolledwindow.add(help_label);
 help_label.set_justify(JUSTIFY_LEFT);
 //TEXTO DE AJUDA A SER EXIBIDO NA JANELA SECUNDÁRIA
-help_label.set_text("CALCULADORA BÁSICA - Versão 2.0\n"
+help_label.set_text("CALCULADORA BÁSICA - Versão 2.2\n"
 "----------------------------------------------------------------\n\n"
 "Este aplicativo permite ao usuário realizar cálculos matemáticos básicos.\n\n"
 
@@ -55,8 +55,13 @@ help_label.set_text("CALCULADORA BÁSICA - Versão 2.0\n"
 "O botão '<-' remove o último caractére exibido no display da calculadora (da direita para a esquerda).\n"
 "O botão 'MR' remove conteúdo exibido no display e aloca seu conteúdo no cachê de memória da calculadora.\n"
 "O botão 'MC' esvazia o cachê de memória da calculadora e exibe o conteúdo alocado no display.\n\n"
+"2.3 - ATALHOS DE TECLADO  \n"
+"----------------------------------------------------------------\n"
+"Os seguintes atalhos de teclado estão disponíveis:\n"
+"'Ctrl+h' --> Exibe o menu de ajuda.\n"
+"'Alt+F4' --> Encerra o aplicativo.\n\n"
 "3.0 - AGRADECIMENTOS\n"
-"----------------------------------------------------------------\n\n"
+"----------------------------------------------------------------\n"
 "Obrigado pela preferência. Sugestões de melhorias entrar em contato com: e.r.emidio@yandex.com.\n\n"
 
 );
