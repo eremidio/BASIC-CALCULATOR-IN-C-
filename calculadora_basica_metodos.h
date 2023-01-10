@@ -30,6 +30,11 @@ help->signal_activate().connect(sigc::mem_fun(*this, &calculator::help));
 help_bar.append(*help);
 help_bar.accelerate(*this);
 help_bar.show_all();
+help_bar.set_tooltip_text("Ctrl+h: invoca o menu de ajuda.");
+
+//Atalhos de teclado
+add_events(Gdk::KEY_PRESS_MASK);
+
 //Opções do display
 caixa1.pack_start(display, PACK_EXPAND_WIDGET, 5);
 display.set_visible(true);
@@ -296,4 +301,20 @@ help_window->set_default_size(600, 600);
 help_window->show();
 help_window->show_all_children();
 help_window->set_title("Calculadora básica - ajuda.");
+};
+
+bool calculator::on_key_press_event(GdkEventKey* key_event){
+//Exibindo o menu de ajuda
+  if((key_event->keyval == GDK_KEY_H) && (key_event->state &(GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) == GDK_CONTROL_MASK){
+    help();
+    return true;
+  }
+ //Encerrando o aplicativo
+if((key_event->keyval == GDK_KEY_F4) && (key_event->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)) == GDK_MOD1_MASK){
+    hide();
+    return true;
+  }
+  
+  //Retornando o método base da classe e
+  return Gtk::Window::on_key_press_event(key_event);
 }
