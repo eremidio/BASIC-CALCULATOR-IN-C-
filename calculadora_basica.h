@@ -62,4 +62,5 @@ void memory_clear();
 void square_root();
 //AJUDA
 void help();
+bool on_key_press_event(GdkEventKey* event) override/*SOBRESCREVENDO O MÉTODO ORIGINAL DA CLASSE Gtk::Window*/;
 };
