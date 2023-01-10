@@ -315,6 +315,6 @@ if((key_event->keyval == GDK_KEY_F4) && (key_event->state & (GDK_SHIFT_MASK | GD
     return true;
   }
   
-  //Retornando o método base da classe e
+  //Retornando o método base da classe em caso de falha
   return Gtk::Window::on_key_press_event(key_event);
 }
