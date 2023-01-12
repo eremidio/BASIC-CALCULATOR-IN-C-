@@ -31,6 +31,13 @@ add(help_scrolledwindow);
 help_scrolledwindow.set_policy(POLICY_AUTOMATIC, POLICY_AUTOMATIC);
 help_scrolledwindow.add(help_label);
 help_label.set_justify(JUSTIFY_LEFT);
+help_label.set_line_wrap();
+//AJUSTE DA FONTE A SER USADA
+Pango::FontDescription help_font;
+help_font.set_family("Times");
+help_font.set_size(10*PANGO_SCALE);
+help_font.set_weight(Pango::Weight::WEIGHT_BOLD);
+help_label.override_font(help_font);
 //TEXTO DE AJUDA A SER EXIBIDO NA JANELA SECUNDÁRIA
 help_label.set_text("CALCULADORA BÁSICA - Versão 2.2\n"
 "----------------------------------------------------------------\n\n"
